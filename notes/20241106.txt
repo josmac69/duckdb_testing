@@ -205,3 +205,51 @@ FROM '/sql/postgresql/csv_import/data.csv' DELIMITER ',' CSV HEADER;
 COPY 40264000
 Time: 113102.171 ms (01:53.102)
 
+
+
+************
+
+D create table local_duckdb_data_60 as select * from './sql/postgresql/csv_import/data_100.csv';
+100% ▕████████████████████████████████████████████████████████████▏ 
+Run Time (s): real 107.237 user 427.331132 sys 120.104113
+
+D select * from duckdb_memory();
+┌──────────────────┬────────────────────┬─────────────────────────┐
+│       tag        │ memory_usage_bytes │ temporary_storage_bytes │
+│     varchar      │       int64        │          int64          │
+├──────────────────┼────────────────────┼─────────────────────────┤
+│ BASE_TABLE       │          620374016 │                       0 │
+│ HASH_TABLE       │                  0 │                       0 │
+│ PARQUET_READER   │                  0 │                       0 │
+│ CSV_READER       │                  0 │                       0 │
+│ ORDER_BY         │                  0 │                       0 │
+│ ART_INDEX        │                  0 │                       0 │
+│ COLUMN_DATA      │                  0 │                       0 │
+│ METADATA         │                  0 │                       0 │
+│ OVERFLOW_STRINGS │                  0 │                       0 │
+│ IN_MEMORY_TABLE  │        52878376960 │             29394358224 │
+│ ALLOCATOR        │                  0 │                       0 │
+│ EXTENSION        │                  0 │                       0 │
+├──────────────────┴────────────────────┴─────────────────────────┤
+│ 12 rows                                               3 columns │
+└─────────────────────────────────────────────────────────────────┘
+Run Time (s): real 0.008 user 0.000695 sys 0.001109
+
+josef@josef-T7-V20-5:~/github.com/josmac69/duckdb_testing/.tmp$ ls -la
+total 19391260
+drwxr-xr-x 2 josef josef       4096 Nov  6 21:23 .
+drwxrwxr-x 8 josef josef       4096 Nov  6 21:22 ..
+-rw-rw-r-- 1 josef josef 1103101952 Nov  6 21:22 duckdb_temp_storage-0.tmp
+-rw-rw-r-- 1 josef josef 2097414144 Nov  6 21:22 duckdb_temp_storage-1.tmp
+-rw-rw-r-- 1 josef josef 4196925440 Nov  6 21:23 duckdb_temp_storage-2.tmp
+-rw-rw-r-- 1 josef josef 8389656576 Nov  6 21:23 duckdb_temp_storage-3.tmp
+-rw-rw-r-- 1 josef josef 4069523456 Nov  6 21:23 duckdb_temp_storage-4.tmp
+
+
+
+josef@josef-T7-V20-5:~/github.com/josmac69/duckdb_testing/.tmp$ ls -la
+total 21086992
+drwxr-xr-x 2 josef josef        4096 Nov  6 21:27 .
+drwxrwxr-x 8 josef josef        4096 Nov  6 21:22 ..
+-rw-rw-r-- 1 josef josef  2903769088 Nov  6 21:27 duckdb_temp_storage-0.tmp
+-rw-rw-r-- 1 josef josef 18689294336 Nov  6 21:27 duckdb_temp_storage-4.tmp
