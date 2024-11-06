@@ -7,7 +7,7 @@ import os
 
 def generate_csv(target_size_gb):
     target_size_bytes = target_size_gb * 1024 ** 3  # Convert GB to bytes
-    output_file = 'data.csv'
+    output_file = f'data_{target_size_gb}.csv'
     
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
@@ -77,4 +77,4 @@ def generate_csv(target_size_gb):
     print(f'\nFinished generating {row_count} rows, total file size: {file_size / (1024 ** 3):.2f} GB')
 
 if __name__ == '__main__':
-    generate_csv(10)  # Change the number to the desired size in GB
+    generate_csv(100)  # Change the number to the desired size in GB

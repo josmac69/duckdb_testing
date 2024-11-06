@@ -1,4 +1,4 @@
-COPY user_data(
+COPY user_data_t2(
     user_id,
     first_name,
     last_name,

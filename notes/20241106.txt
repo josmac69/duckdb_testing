@@ -1,0 +1,207 @@
+* created first version
+Generated 40264000 rows, file size: 10.00 GB
+Finished generating 40264000 rows, total file size: 10.00 GB
+
+* PostgreSQL import:
+postgres=# COPY user_data(
+    user_id,
+    first_name,
+    last_name,
+    email,
+    signup_date,
+    last_login,
+    is_active,
+    account_balance,
+    country_code,
+    favorite_number,
+    profile_text,
+    checksum
+)
+FROM '/sql/postgresql/csv_import/data.csv' DELIMITER ',' CSV HEADER;
+COPY 40264000
+Time: 934968.817 ms (15:34.969)
+
+postgres=# COPY user_data(
+    user_id,
+    first_name,
+    last_name,
+    email,
+    signup_date,
+    last_login,
+    is_active,
+    account_balance,
+    country_code,
+    favorite_number,
+    profile_text,
+    checksum
+)
+FROM '/sql/postgresql/csv_import/data.csv' DELIMITER ',' CSV HEADER;
+COPY 40264000
+Time: 400172.327 ms (06:40.172)
+
+
+* DuckDB part
+D select count(*) from './sql/postgresql/csv_import/data.csv';
+100% ▕████████████████████████████████████████████████████████████▏ 
+┌──────────────┐
+│ count_star() │
+│    int64     │
+├──────────────┤
+│     40264000 │
+└──────────────┘
+Run Time (s): real 2.085 user 16.164794 sys 1.932140
+
+
+D create table pg_db.duckdb_data as select * from './sql/postgresql/csv_import/data.csv';
+100% ▕████████████████████████████████████████████████████████████▏ 
+Run Time (s): real 143.091 user 26.458341 sys 2.868024
+
+
+D summarize select * from './sql/postgresql/csv_import/data.csv';
+100% ▕████████████████████████████████████████████████████████████▏ 
+┌─────────────────┬─────────────┬──────────────────────┬──────────────────────┬───────────────┬────────────────────┬────────────────────┬─────────────────────────┬────────────────────────────┬────────────────────────────┬──────────┬─────────────────┐
+│   column_name   │ column_type │         min          │         max          │ approx_unique │        avg         │        std         │           q25           │            q50             │            q75             │  count   │ null_percentage │
+│     varchar     │   varchar   │       varchar        │       varchar        │     int64     │      varchar       │      varchar       │         varchar         │          varchar           │          varchar           │  int64   │  decimal(9,2)   │
+├─────────────────┼─────────────┼──────────────────────┼──────────────────────┼───────────────┼────────────────────┼────────────────────┼─────────────────────────┼────────────────────────────┼────────────────────────────┼──────────┼─────────────────┤
+│ user_id         │ BIGINT      │ 1                    │ 40264000             │      57525294 │ 20132000.5         │ 11623215.763663102 │ 10075829                │ 20141347                   │ 30195408                   │ 40264000 │            0.00 │
+│ first_name      │ VARCHAR     │ AAA                  │ zzzzw                │      35751941 │                    │                    │                         │                            │                            │ 40264000 │            0.00 │
+│ last_name       │ VARCHAR     │ AAA                  │ zzzzzaPcz            │      34136610 │                    │                    │                         │                            │                            │ 40264000 │            0.00 │
+│ email           │ VARCHAR     │ aaa.adchxaprf36020…  │ zzzzzqt.oatdvhcny6…  │      37369487 │                    │                    │                         │                            │                            │ 40264000 │            0.00 │
+│ signup_date     │ TIMESTAMP   │ 2022-02-10 19:19:20  │ 2024-11-06 19:31:31  │        597524 │                    │                    │ 2022-10-18 16:18:13.3…  │ 2023-06-25 20:39:11.040803 │ 2024-03-01 11:53:23.972706 │ 40264000 │            0.00 │
+│ last_login      │ TIMESTAMP   │ 2022-02-10 19:19:54  │ 2024-11-06 19:31:31  │        597524 │                    │                    │ 2023-10-21 08:40:25.5…  │ 2024-05-03 23:58:06.219952 │ 2024-08-31 05:39:11.128824 │ 40264000 │            0.00 │
+│ is_active       │ BOOLEAN     │ false                │ true                 │             2 │                    │                    │                         │                            │                            │ 40264000 │            0.00 │
+│ account_balance │ DOUBLE      │ 0.0                  │ 10000.0              │       1012389 │ 5000.467309506248  │ 2886.8652082856597 │ 2500.22690704877        │ 5002.051941276066          │ 7500.459719123196          │ 40264000 │            0.00 │
+│ country_code    │ VARCHAR     │ AU                   │ US                   │            11 │                    │                    │                         │                            │                            │ 40264000 │            0.00 │
+│ favorite_number │ BIGINT      │ 1                    │ 100                  │            96 │ 50.494542941585536 │ 28.87109793133007  │ 26                      │ 50                         │ 76                         │ 40264000 │            0.00 │
+│ profile_text    │ VARCHAR     │     RnTcBeI7nHOdnt…  │ zzzzAhLDeQhuru6F9R…  │      42093726 │                    │                    │                         │                            │                            │ 40264000 │            0.00 │
+│ checksum        │ VARCHAR     │ 0000004f-6a79-43d2…  │ ffffffc7-ec51-4428…  │      40412208 │                    │                    │                         │                            │                            │ 40264000 │            0.00 │
+├─────────────────┴─────────────┴──────────────────────┴──────────────────────┴───────────────┴────────────────────┴────────────────────┴─────────────────────────┴────────────────────────────┴────────────────────────────┴──────────┴─────────────────┤
+│ 12 rows                                                                                                                                                                                                                                     12 columns │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Run Time (s): real 7.731 user 135.642111 sys 2.417128
+
+D attach 'host=localhost user=postgres dbname=postgres port=5432 password=postgres' as pg_db (type postgres, schema 'public');
+Run Time (s): real 0.581 user 0.392484 sys 0.074753
+D create table pg_db.duckdb_data as select * from './sql/postgresql/csv_import/data.csv';
+100% ▕████████████████████████████████████████████████████████████▏ 
+Run Time (s): real 143.091 user 26.458341 sys 2.868024
+
+***
+
+postgres=# COPY user_data(
+    user_id,
+    first_name,
+    last_name,
+    email,
+    signup_date,
+    last_login,
+    is_active,
+    account_balance,
+    country_code,
+    favorite_number,
+    profile_text,
+    checksum
+)
+FROM '/sql/postgresql/csv_import/data.csv' DELIMITER ',' CSV HEADER;
+COPY 40264000
+Time: 400172.327 ms (06:40.172)
+
+
+postgres=# \dS+ user_data
+                                                                        Table "public.user_data"
+     Column      |            Type             | Collation | Nullable |                  Default                   | Storage  | Compression | Stats target | Description 
+-----------------+-----------------------------+-----------+----------+--------------------------------------------+----------+-------------+--------------+-------------
+ user_id         | bigint                      |           | not null | nextval('user_data_user_id_seq'::regclass) | plain    |             |              | 
+ first_name      | character varying(50)       |           | not null |                                            | extended |             |              | 
+ last_name       | character varying(50)       |           | not null |                                            | extended |             |              | 
+ email           | character varying(100)      |           | not null |                                            | extended |             |              | 
+ signup_date     | timestamp without time zone |           | not null |                                            | plain    |             |              | 
+ last_login      | timestamp without time zone |           |          |                                            | plain    |             |              | 
+ is_active       | boolean                     |           | not null | true                                       | plain    |             |              | 
+ account_balance | numeric(12,2)               |           | not null | 0.00                                       | main     |             |              | 
+ country_code    | character(2)                |           | not null |                                            | extended |             |              | 
+ favorite_number | integer                     |           |          |                                            | plain    |             |              | 
+ profile_text    | text                        |           |          |                                            | extended |             |              | 
+ checksum        | uuid                        |           | not null |                                            | plain    |             |              | 
+Indexes:
+    "user_data_pkey" PRIMARY KEY, btree (user_id)
+    "user_data_email_key" UNIQUE CONSTRAINT, btree (email)
+Access method: heap
+
+postgres=# \dS+ duckdb_data 
+                                                      Table "public.duckdb_data"
+     Column      |            Type             | Collation | Nullable | Default | Storage  | Compression | Stats target | Description 
+-----------------+-----------------------------+-----------+----------+---------+----------+-------------+--------------+-------------
+ user_id         | bigint                      |           |          |         | plain    |             |              | 
+ first_name      | character varying           |           |          |         | extended |             |              | 
+ last_name       | character varying           |           |          |         | extended |             |              | 
+ email           | character varying           |           |          |         | extended |             |              | 
+ signup_date     | timestamp without time zone |           |          |         | plain    |             |              | 
+ last_login      | timestamp without time zone |           |          |         | plain    |             |              | 
+ is_active       | boolean                     |           |          |         | plain    |             |              | 
+ account_balance | double precision            |           |          |         | plain    |             |              | 
+ country_code    | character varying           |           |          |         | extended |             |              | 
+ favorite_number | bigint                      |           |          |         | plain    |             |              | 
+ profile_text    | character varying           |           |          |         | extended |             |              | 
+ checksum        | character varying           |           |          |         | extended |             |              | 
+Access method: heap
+
+D attach 'host=localhost user=postgres dbname=postgres port=5432 password=postgres' as pg_db (type postgres, schema 'public');
+Run Time (s): real 0.031 user 0.263042 sys 0.005405
+D create table pg_db.duckdb_data as select * from './sql/postgresql/csv_import/data.csv';
+100% ▕████████████████████████████████████████████████████████████▏ 
+Run Time (s): real 77.473 user 27.127667 sys 2.837456
+
+postgres=# \dt+
+                                       List of relations
+ Schema |    Name     | Type  |  Owner   | Persistence | Access method |  Size   | Description 
+--------+-------------+-------+----------+-------------+---------------+---------+-------------
+ public | duckdb_data | table | postgres | permanent   | heap          | 11 GB   | 
+ public | user_data   | table | postgres | permanent   | heap          | 9876 MB | 
+(2 rows)
+
+
+postgres-# create table user_data_duckdb as select * from duckdb_data where 1=0;
+ERROR:  syntax error at or near "."
+LINE 1: .timing on
+        ^
+postgres=# ^C
+postgres=# \timing on
+Timing is on.
+postgres=# COPY user_data_duckdb(
+    user_id,
+    first_name,
+    last_name,
+    email,
+    signup_date,
+    last_login,
+    is_active,
+    account_balance,
+    country_code,
+    favorite_number,
+    profile_text,
+    checksum
+)
+FROM '/sql/postgresql/csv_import/data.csv' DELIMITER ',' CSV HEADER;
+COPY 40264000
+Time: 107512.257 ms (01:47.512)
+
+
+postgres=# COPY user_data_t2(
+    user_id,
+    first_name,
+    last_name,
+    email,
+    signup_date,
+    last_login,
+    is_active,
+    account_balance,
+    country_code,
+    favorite_number,
+    profile_text,
+    checksum
+)
+FROM '/sql/postgresql/csv_import/data.csv' DELIMITER ',' CSV HEADER;
+COPY 40264000
+Time: 113102.171 ms (01:53.102)
+

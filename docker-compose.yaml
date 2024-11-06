@@ -9,11 +9,20 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./sql:/sql
+      - ./config/postgresql.conf:/etc/postgresql/postgresql.conf
     #   - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Optional: mount an init script if needed
     ports:
       - "5432:5432"
     networks:
       - postgres_network
+    shm_size: 4gb
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    deploy:
+      resources:
+        limits:
+          memory: 32gb
+        reservations:
+          memory: 32gb
 
 volumes:
   postgres_data:
@@ -24,4 +33,3 @@ networks:
   postgres_network:
     driver: bridge
     name: postgres_network
-
