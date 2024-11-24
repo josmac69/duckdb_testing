@@ -14,7 +14,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - postgres_network
+      - duckdb_test_network
     shm_size: 4gb
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
     deploy:
@@ -24,12 +24,34 @@ services:
         reservations:
           memory: 32gb
 
+  mssql:
+    container_name: mssql-db
+    hostname: mssql-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: 'TeST@+$-'
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: 'Developer'
+      MSSQL_TCP_PORT: 1433
+    ports:
+      - "1433:1433"
+    networks:
+      - duckdb_test_network
+    volumes:
+      - mssql_volume:/var/opt/mssql
+      - /data:/data
+      # - ./log:/var/opt/mssql/log
+      # - ./secrets:/var/opt/mssql/secrets
+
 volumes:
+  mssql_volume:
+    name: duckdb_test_mssql_volume
   postgres_data:
     driver: local
     name: duckdb_test_postgres_data
 
 networks:
-  postgres_network:
+  duckdb_test_network:
     driver: bridge
-    name: postgres_network
+    name: duckdb_test_network
