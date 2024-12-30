@@ -2,3 +2,4 @@
 duckdb
 .tmp/
 *.duckdb
+*.duckdb.gz
