@@ -3,20 +3,16 @@
 # Define the docker-compose command and options
 DCOMPOSE = docker compose -f docker-compose.yaml
 
-# Start PostgreSQL container
 start:
-	@$(DCOMPOSE) up -d
-	@echo "PostgreSQL container started."
+	@$(DCOMPOSE) up -d $(SERVICE)
 
-# Stop PostgreSQL container
 stop:
-	@$(DCOMPOSE) down
-	@echo "PostgreSQL container stopped."
+	@$(DCOMPOSE) down $(SERVICE)
 
 # Restart PostgreSQL container
 restart:
-	@$(DCOMPOSE) down
-	@$(DCOMPOSE) up -d
+	@$(DCOMPOSE) down postgres
+	@$(DCOMPOSE) up -d postgres
 	@echo "PostgreSQL container restarted."
 
 # Check status of PostgreSQL container
@@ -35,4 +31,7 @@ logs:
 psql:
 	docker exec -it postgres_db psql -U postgres -d postgres
 
-.PHONY: start stop restart status clean logs
+bash:
+	docker exec -it postgres_db bash
+
+.PHONY: start stop restart status clean logs psql bash
